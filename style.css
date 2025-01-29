@@ -1,0 +1,251 @@
+/* Загальні стилі для сторінки */
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #2b5876, #4e4376); /* Елегантний темний градієнт */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+
+/* Кнопка */
+.ah {
+    position: fixed;
+    top:1%;
+    left: 2%;
+    padding: 12px 24px;
+    border: none;
+    background: linear-gradient(90deg, #4facfe, #00f2fe); /* Яскравий синій градієнт */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Анімація наведення */
+.ah:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Полоска під кнопкою */
+.header::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00f2fe, #ffcc00); /* Голуба + жовта смужка */
+}
+
+
+
+h1 {
+    background: linear-gradient(90deg, #ff512f, #dd2476); /* Яскравий градієнт */
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-size: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Меню */
+#menu {
+    margin: 20px 0;
+}
+
+button {
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    background: linear-gradient(90deg, #4facfe, #00f2fe); /* Яскравий синій градієнт */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Блок гри */
+#game {
+    margin-top: 20px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1); /* Напівпрозорий фон */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Вміст гри */
+.game-content {
+    text-align: left;
+}
+
+.game-title {
+    font-size: 28px;
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.game-info {
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.example-box {
+    font-size: 22px;
+    margin: 20px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef); /* Легкий рожевий градієнт */
+    border-radius: 10px;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.answer-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: border 0.3s ease;
+}
+
+.answer-input:focus {
+    border: 1px solid #4682b4;
+}
+
+.game-button {
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.game-over {
+    color: #ff4d4d;
+    font-size: 26px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.game-result {
+    font-size: 20px;
+    color: #ffffff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Стиль для таблиці чисел */
+.table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.number-table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.number-table td {
+    width: 10%;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.number-table td:hover {
+    background-color: #f1f1f1;
+}
+
+.number-table td.cell {
+    background-color: #2b587622;
+}
+
+.number-table td.green {
+    background-color: #28a745; /* Правильний вибір */
+    color: #ffffff;
+}
+
+.number-table td.red {
+    background-color: #dc3545; /* Неправильний вибір */
+    color: #ffffff;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+    .game-content {
+        padding: 15px;
+    }
+
+    .number-table td {
+        padding: 8px;
+        font-size: 16px;
+    }
+}
