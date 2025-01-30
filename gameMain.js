@@ -264,6 +264,20 @@ window.onload = function () {
     }
     document.onkeyup = keyUp;
 }
+window.onload = function () {
+    gameObj.intiStage();
+    gameObj.newBox();
+    document.addEventListener('touchstart', function (e) {
+        controller.start(e.touches[0].clientX, e.touches[0].clientY);
+    });
+    document.addEventListener('touchmove', function (e) {
+        controller.move(e.touches[0].clientX, e.touches[0].clientY);
+    });
+    document.addEventListener('touchend', function () {
+        controller.end();
+    });
+};
+
 
 document.getElementById('show-instructions').addEventListener('click', function() {
   document.getElementById('instructions-popup').classList.remove('hidden');
