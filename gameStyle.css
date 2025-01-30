@@ -23,8 +23,11 @@ body{
   font-family: "microsoft yahei";
   background: linear-gradient(135deg, #2b5876, #4e4376);
   overflow: hidden;
+  overflow-x: hidden;
 }
 .container{
+  max-width: 100vw;
+   overflow-x: hidden;
    margin:auto;
    width: 470px;
    height: 100%;
