@@ -142,7 +142,7 @@ function showTableGameRules() {
             <p>2️⃣ Числа будуть перемішані випадковим чином у таблиці, і ви повинні натискати на них у правильному порядку.</p>
             <p>3️⃣ Кожен раз, коли ви натискаєте правильне число, воно змінює колір на зелений, а ви отримуєте 1 бал.</p>
             <p>4️⃣ Якщо ви натискаєте неправильне число, воно змінює колір на червоний.</p>
-            <p>5️⃣ Гра триває, поки ви не знайдете всі числа або не зробите помилку.</p>
+            <p>5️⃣ Гра триває, поки ви не знайдете всі числа.</p>
             <p>⏳ Поки вікно правил відкрите, гра не починається.</p>
             <button id="start-table-game" class="start-button">Почати гру</button>
         </div>
@@ -243,7 +243,7 @@ function loadCustomExpressionsGame() {
     // Очищуємо блок гри та додаємо елементи
     gameDiv.innerHTML = `
         <div class="game-content">
-            <h2 class="game-title">Нестандартні вирази</h2>
+            <h2 class="game-title">Вирази</h2>
             <p><strong>Час:</strong> <span id="time" class="game-info">${timer}</span> секунд</p>
             <p><strong>Рейтинг:</strong> <span id="score" class="game-info">${score}</span></p>
             <div id="expression" class="example-box"></div>
