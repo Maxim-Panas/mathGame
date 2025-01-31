@@ -323,6 +323,32 @@ function loadCustomExpressionsGame() {
     
     document.getElementById("menu").appendChild(customExpressionsBtn);
     
+// Функція для показу вікна з правилами
+function showRulesAndStartGame() {
+    gameDiv.innerHTML = `
+        <div class="rules-modal">
+            <h2>Правила гри "Шалений рахунок"</h2>
+            <p>1️⃣ Ваша мета — отримати цільове число, використовуючи математичні операції.</p>
+            <p>2️⃣ Початкове число — 1. Ви можете змінювати його за допомогою кнопок:</p>
+            <ul>
+                <li>✖ ×2 — множить число на 2</li>
+                <li>➕ +5 — додає 5</li>
+                <li>➖ -3 — віднімає 3</li>
+                <li>➗ ÷2 — ділить число на 2 (округлюється вниз)</li>
+            </ul>
+            <p>3️⃣ Кожну секунду число автоматично збільшується на 1.</p>
+            <p>4️⃣ Якщо ваше число співпадає з цільовим, ви отримуєте +1 бал, і гра продовжується з новою ціллю.</p>
+            <p>5️⃣ Якщо число виходить за межі (≤0 або >1000) — гра завершується.</p>
+            <p>⏳ Поки вікно правил відкрите, гра не починається.</p>
+            <button id="start-game" class="start-button">Почати гру</button>
+        </div>
+    `;
+    document.getElementById("start-game").addEventListener("click", () => {
+        loadCrazyMathGame();
+    });
+}
+
+
 // Додаємо кнопку для показу правил гри 2048
 const game2048RulesBtn = document.createElement("button");
 game2048RulesBtn.textContent = "Гра 2048";
@@ -360,31 +386,7 @@ function start2048Game() {
 }
 
 
-    
-// Функція для показу вікна з правилами
-function showRulesAndStartGame() {
-    gameDiv.innerHTML = `
-        <div class="rules-modal">
-            <h2>Правила гри "Шалений рахунок"</h2>
-            <p>1️⃣ Ваша мета — отримати цільове число, використовуючи математичні операції.</p>
-            <p>2️⃣ Початкове число — 1. Ви можете змінювати його за допомогою кнопок:</p>
-            <ul>
-                <li>✖ ×2 — множить число на 2</li>
-                <li>➕ +5 — додає 5</li>
-                <li>➖ -3 — віднімає 3</li>
-                <li>➗ ÷2 — ділить число на 2 (округлюється вниз)</li>
-            </ul>
-            <p>3️⃣ Кожну секунду число автоматично збільшується на 1.</p>
-            <p>4️⃣ Якщо ваше число співпадає з цільовим, ви отримуєте +1 бал, і гра продовжується з новою ціллю.</p>
-            <p>5️⃣ Якщо число виходить за межі (≤0 або >1000) — гра завершується.</p>
-            <p>⏳ Поки вікно правил відкрите, гра не починається.</p>
-            <button id="start-game" class="start-button">Почати гру</button>
-        </div>
-    `;
-    document.getElementById("start-game").addEventListener("click", () => {
-        loadCrazyMathGame();
-    });
-}
+
 
 // Функція для гри "Шалений рахунок"
 function loadCrazyMathGame() {
