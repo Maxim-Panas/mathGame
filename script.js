@@ -8,10 +8,6 @@ examplesBtn.addEventListener("click", () => {
 });
 
 
-document.getElementById('examples-btn').addEventListener('click', function() {
-        window.location.href = 'gameMain.html';
-
-
 // Функція для завершення гри
 function endGame(message, score, time = null) {
     gameDiv.innerHTML = `
@@ -470,3 +466,6 @@ crazyMathBtn.textContent = "Шалений рахунок";
 crazyMathBtn.className = "menu-button";
 crazyMathBtn.addEventListener("click", showRulesAndStartGame);
 document.getElementById("menu").appendChild(crazyMathBtn);
+
+document.getElementById('examples-btn').addEventListener('click', function() {
+        window.location.href = 'gameMain.html';
