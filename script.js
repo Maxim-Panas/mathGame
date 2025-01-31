@@ -467,5 +467,3 @@ crazyMathBtn.className = "menu-button";
 crazyMathBtn.addEventListener("click", showRulesAndStartGame);
 document.getElementById("menu").appendChild(crazyMathBtn);
 
-document.getElementById('examples-btn').addEventListener('click', function() {
-        window.location.href = 'gameMain.html';
