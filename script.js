@@ -7,6 +7,11 @@ examplesBtn.addEventListener("click", () => {
     loadExamplesGame();
 });
 
+
+document.getElementById('examples-btn').addEventListener('click', function() {
+        window.location.href = 'gameMain.html';
+
+
 // Функція для завершення гри
 function endGame(message, score, time = null) {
     gameDiv.innerHTML = `
