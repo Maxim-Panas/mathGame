@@ -382,7 +382,7 @@ function show2048GameRules() {
 
 // Функція для переходу на файл mainGame.html
 function start2048Game() {
-    window.location.href = "GameMain.html";  // Перенаправляє на файл mainGame.html
+    window.location.href = "gameMain.html";  // Перенаправляє на файл mainGame.html
 }
 
 
