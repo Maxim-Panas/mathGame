@@ -41,7 +41,7 @@ body{
 /* Стилі для кнопки "New Game" */
 #newGame {
   position: fixed;
-  top: 2vh;  /* Відстань від верхнього краю */
+  top: 20vh;  /* Відстань від верхнього краю */
   right: 2vw; /* Відстань від правого краю */
   padding: 1vh 2vw;
   font-size: clamp(14px, 3vmin, 20px); /* Адаптивний розмір шрифта */
@@ -63,8 +63,8 @@ body{
 
 /* Стилі для кнопки "Інструкція" */
 #instructions {
-  top: 10vh; /* Відстань від верхнього краю */
-  left: 2vw; /* Відстань від лівого краю */
+  top: 12vh; /* Відстань від верхнього краю */
+  right: 2vw; /* Відстань від лівого краю */
   padding: 1vh 2vw;
   font-size: clamp(14px, 3vmin, 20px); /* Адаптивний розмір шрифта */
   background-color: #4facfe;
@@ -94,30 +94,44 @@ body{
   #newGame {
     padding: 0.8vh 3vw;
     font-size: 14px;
+    top: 10vh; /* Відстань від верхнього краю */
   }
 
   /* Для кнопки "Інструкція" */
   #instructions {
     padding: 0.8vh 3vw;
     font-size: 14px;
+    top: 16vh; /* Відстань від верхнього краю */
   }
 
-  /* Для дуже маленьких екранів (до 300px) */
-  @media (max-width: 300px) {
-    .top-button {
-      padding: 0.6vh 2vw; /* Зменшуємо ще більше для маленьких екранів */
-      font-size: 12px; /* Зменшення шрифта */
-    }
-    #newGame {
-      padding: 0.6vh 2vw;
-      font-size: 12px;
-    }
-    #instructions {
-      padding: 0.6vh 2vw;
-      font-size: 12px;
-    }
+  /* Робимо кнопки ближче одна до одної */
+  #newGame, #instructions {
+    right: 5vw; /* Трохи віддаляємо кнопки від правого краю */
   }
 }
+
+/* Адаптація для дуже маленьких екранів (до 300px) */
+@media (max-width: 300px) {
+  .top-button {
+    padding: 0.6vh 2vw; /* Зменшуємо ще більше для маленьких екранів */
+    font-size: 12px; /* Зменшення шрифта */
+  }
+  #newGame {
+    padding: 0.6vh 2vw;
+    font-size: 12px;
+  }
+  #instructions {
+    padding: 0.6vh 2vw;
+    font-size: 12px;
+  }
+
+  /* Для дуже маленьких екранів */
+  #newGame, #instructions {
+    right: 4vw; /* Менший відступ від правого краю */
+    top: 8vh; /* Зменшуємо відстань від верхнього краю */
+  }
+}
+
 
 
 /* Контейнер гри */
@@ -152,17 +166,58 @@ body{
 }
 
 
-#score {
-  font-size: clamp(20px, 6vmin, 50px);
-  color: #4facfe;
+.score-container {
   position: fixed;
-  top: 2vh;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
+  top: 4px; /* Відстань від верхнього краю */
+  right: 10px; /* Відстань від правого краю */
+  display: flex;
+  justify-content: space-between;
+  width: 300px; /* Ширина контейнера */
+  padding: 5px 20px; /* Зменшено висоту контейнера */
+  background-color: rgba(0, 0, 0, 0.7); /* Темний фон */
+  border-radius: 10px;
   z-index: 10;
-  white-space: nowrap;
+  gap: 30px; /* Відстань між цифрами */
 }
+
+.score-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  padding: 5px 15px; /* Менше відступу для зменшення висоти */
+  border-radius: 8px;
+  color: white;
+  font-size: clamp(20px, 6vmin, 50px);
+  font-weight: bold;
+}
+
+/* Адаптивність для екранів шириною 600px */
+@media (max-width: 600px) {
+  .score-container {
+      width: 200px;
+      gap: 25px;
+  }
+}
+
+/* Адаптивність для екранів шириною 300px */
+@media (max-width: 300px) {
+  .score-container {
+      width: 150px;
+      gap: 20px;
+  }
+}
+
+#score {
+  color: #4facfe; /* Синій */
+}
+
+#highScore {
+  color: #ffcc00; /* Золотий */
+}
+
+
+
 
 #addScore {
   font-size: clamp(14px, 4vmin, 30px);
@@ -220,16 +275,17 @@ body{
 
 /* Плитки */
 span {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc(25% - 1vmin);
   height: calc(25% - 1vmin);
   border-radius: 1vmin;
   position: absolute;
   text-align: center;
-  line-height: calc(22.5vmin - 1vmin) !important;
   cursor: pointer;
   background: #fff;
-  font-size: 6vmin;
+  font-size: 10vmin; /* Збільшений розмір шрифта */
   transition: all 0.15s ease;
   box-shadow: 0 0.3vmin 0.6vmin rgba(0,0,0,0.1);
   transform: translate(-7.5%, 0%); /* Перемістив 0.5% вправо і вниз */
@@ -246,26 +302,20 @@ span {
 .cell2 { left: 52.5%; }
 .cell3 { left: 77.5%; }
 
-
-
-
-
-
-
 /* Стилі чисел */
-.num2{ background: #eee4da; color: #776e65; }
-.num4{ background: #ede0c8; color: #776e65; }
-.num8{ background: #f2b179; color: #f9f6f2; }
-.num16{ background: #f59563; color: #f9f6f2; }
-.num32{ background: #f67c5f; color: #f9f6f2; }
-.num64{ background: #f65e3b; color: #f9f6f2; }
-.num128{ background: #edcf72; color: #f9f6f2; font-size: 5vmin; }
-.num256{ background: #edcc61; color: #f9f6f2; font-size: 5vmin; }
-.num512{ background: #edc850; color: #f9f6f2; font-size: 5vmin; }
-.num1024{ background: #edc53f; color: #f9f6f2; font-size: 4.5vmin; }
-.num2048{ background: #edc22e; color: #f9f6f2; font-size: 4.5vmin; }
+.num2{ background: #eee4da; color: #776e65; font-size: 9vmin; }
+.num4{ background: #ede0c8; color: #776e65; font-size: 9vmin; }
+.num8{ background: #f2b179; color: #f9f6f2; font-size: 9vmin; }
+.num16{ background: #f59563; color: #f9f6f2; font-size: 9vmin; }
+.num32{ background: #f67c5f; color: #f9f6f2; font-size: 9vmin; }
+.num64{ background: #f65e3b; color: #f9f6f2; font-size: 9vmin; }
+.num128{ background: #edcf72; color: #f9f6f2; font-size: 8vmin; }
+.num256{ background: #edcc61; color: #f9f6f2; font-size: 8vmin; }
+.num512{ background: #edc850; color: #f9f6f2; font-size: 8vmin; }
+.num1024{ background: #edc53f; color: #f9f6f2; font-size: 7vmin; }
+.num2048{ background: #edc22e; color: #f9f6f2; font-size: 7vmin; }
 /* Додаткові стилі для чисел більше 2048 */
-.num4096{ background: #3c3a32; color: #f9f6f2; font-size: 4.5vmin; }
+.num4096{ background: #3c3a32; color: #f9f6f2; font-size: 7vmin; }
 
 
 /* Анімації */
@@ -299,3 +349,5 @@ span {
 
 #undo{ position: relative; z-index: 990; }
 .cover{ position: fixed; width: 100%; height: 100%; z-index: 999; opacity: 0.1; cursor: pointer; }
+
+
