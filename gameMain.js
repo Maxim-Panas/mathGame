@@ -1,3 +1,16 @@
+function getHighScore() {
+    return localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+}
+
+function updateHighScore(score) {
+    let highScore = getHighScore();
+    if (score > highScore) {
+        localStorage.setItem("highScore", score);
+        document.getElementById("highScore").innerText = score;
+    }
+}
+
+
 var gameObj = {
   points: {
       score: 0,
@@ -133,9 +146,13 @@ var gameObj = {
           obj2.boxObj.domObj.className = 'row' + obj2.position[0] + ' ' + 'cell' + obj2.position[1] + ' ' + 'num' + obj2.boxObj.value;
           obj2.boxObj.domObj.innerText = obj2.boxObj.value;
           obj2.boxObj.domObj.textContent = obj2.boxObj.value;
-          this.points.score+=obj2.boxObj.value;
-      var scoreBar= document.getElementById('score');
-      scoreBar.innerText=this.points.score;
+          this.points.score += obj2.boxObj.value;
+          var scoreBar = document.getElementById('score');
+          scoreBar.innerText = this.points.score;
+          
+          // Оновлюємо high score
+          updateHighScore(this.points.score);
+          
       scoreBar.textContent=this.points.score;
       return obj2.boxObj.value;
 
@@ -269,6 +286,8 @@ function disableSelection(target){
 window.onload = function () {
   gameObj.intiStage();
   gameObj.newBox();
+  document.getElementById("highScore").innerText = getHighScore();
+
   var stage = document.getElementById('stage');
   document.onmousedown = function (e) {
       var event = e || window.event;
@@ -349,4 +368,9 @@ document.getElementById("newGame").addEventListener("click", function () {
     window.location.href = "main1.html";  // Перенаправляє на файл main1.html
 });
 
-  
+let element = document.getElementById('yourElementId');
+if (element) {
+  element.innerText = 'New text';
+} else {
+  console.error('Element not found in DOM');
+}
