@@ -77,9 +77,49 @@ var gameObj = {
       }
       return false;
   },
-  gameOver:function(){
-      alert('GAVE OVER!');
-  },
+  gameOver: function() {
+    // Створюємо елемент повідомлення
+    var message = document.createElement('div');
+    message.textContent = 'Game Over!';
+
+    // Стилі для повідомлення
+    message.style.position = 'fixed';
+    message.style.top = '50%';
+    message.style.left = '50%';
+    message.style.transform = 'translate(-50%, -50%)';
+    message.style.backgroundColor = '#003366'; // темносиний
+    message.style.color = '#fff'; // білий текст
+    message.style.padding = '20px';
+    message.style.borderRadius = '10px';
+    message.style.fontSize = '24px';
+    message.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.5)';
+    message.style.zIndex = '1000';
+
+    // Створюємо кнопку "Нова гра"
+    var newGameButton = document.createElement('button');
+    newGameButton.textContent = 'Нова гра';
+    newGameButton.style.marginTop = '20px';
+    newGameButton.style.padding = '10px 20px';
+    newGameButton.style.fontSize = '16px';
+    newGameButton.style.backgroundColor = '#0055a5'; // темно-синій колір кнопки
+    newGameButton.style.color = '#fff'; // білий текст
+    newGameButton.style.border = 'none';
+    newGameButton.style.borderRadius = '5px';
+    newGameButton.style.cursor = 'pointer';
+
+    // Додаємо функціонал для кнопки "Нова гра"
+    newGameButton.onclick = function() {
+        location.reload(); // перезавантажує сторінку для початку нової гри
+    };
+
+    // Додаємо кнопку до повідомлення
+    message.appendChild(newGameButton);
+
+    // Додаємо повідомлення на сторінку
+    document.body.appendChild(message);
+
+}
+,
   moveTo :function (obj1, obj2) {
           obj2.boxObj = obj1.boxObj;
           obj2.boxObj.domObj.className = 'row' + obj2.position[0] + ' ' + 'cell' + obj2.position[1] + ' ' + 'num' + obj2.boxObj.value;
