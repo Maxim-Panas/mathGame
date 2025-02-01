@@ -33,6 +33,7 @@ function loadExamplesGame() {
             <h2 class="game-title">Рішення прикладів</h2>
             <p><strong>Час:</strong> <span id="time" class="game-info">${timer}</span> секунд</p>
             <p><strong>Рейтинг:</strong> <span id="score" class="game-info">${score}</span></p>
+            <p><strong>Найкращий рейтинг:</strong> <span id="best-score" class="game-info">${localStorage.getItem('bestScoreExamples') ? JSON.parse(localStorage.getItem('bestScoreExamples')).score : 0}</span></p>
             <div id="example" class="example-box"></div>
             <div id="answer-options" class="answer-options"></div>
             <button id="end-game" class="end-button">Завершити гру</button>
@@ -41,10 +42,11 @@ function loadExamplesGame() {
 
     const timeSpan = document.getElementById("time");
     const scoreSpan = document.getElementById("score");
+    const bestScoreSpan = document.getElementById("best-score");
     const exampleDiv = document.getElementById("example");
     const answerOptionsDiv = document.getElementById("answer-options");
     document.getElementById("end-game").addEventListener("click", () => {
-        endGame("Гру завершено!", score);
+        endExamplesGame("Гру завершено!", score);
     });
 
     // Функція для генерації прикладу
@@ -97,9 +99,35 @@ function loadExamplesGame() {
         if (userAnswer === correctAnswer) {
             score++;
             scoreSpan.textContent = score;
+            const bestScore = localStorage.getItem('bestScoreExamples') ? JSON.parse(localStorage.getItem('bestScoreExamples')).score : 0;
+            if (score > bestScore) {
+                localStorage.setItem('bestScoreExamples', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+                bestScoreSpan.textContent = score;
+            }
         }
         correctAnswer = generateExample();
     }
+
+// Функція для завершення гри "Рішення прикладів"
+function endExamplesGame(message, score, time = null) {
+    const bestScore = localStorage.getItem('bestScoreExamples') ? JSON.parse(localStorage.getItem('bestScoreExamples')).score : 0;
+    if (score > bestScore) {
+        localStorage.setItem('bestScoreExamples', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+    }
+
+    gameDiv.innerHTML = `
+        <h2 class="game-over">${message}</h2>
+        <p class="game-result">Ваш рейтинг: ${score}</p>
+        ${time !== null ? `<p class="game-result">Час: ${time} секунд</p>` : ""}
+        ${bestScore > 0 ? `<p class="game-result">Найкращий рейтинг: ${bestScore}</p>` : ""}
+        <button id="back-to-menu" class="end-button">Назад до меню</button>
+    `;
+
+    document.getElementById("back-to-menu").addEventListener("click", () => {
+        location.reload(); // Перезавантаження сторінки для повернення до меню
+    });
+}
+
 
     let correctAnswer = generateExample();
 
@@ -109,10 +137,12 @@ function loadExamplesGame() {
         timeSpan.textContent = timer;
         if (timer <= 0) {
             clearInterval(timerInterval);
-            endGame("Гру завершено!", score);
+            endExamplesGame("Гру завершено!", score);
+
         }
     }, 1000);
 }
+
 
 // Меню вибору рівнів для гри "Таблиця чисел"
 function showTableGameMenu() {
@@ -167,6 +197,10 @@ function loadTableGame(maxNumber) {
     let numbersArray = []; // Массив для чисел
     let currentNumber = 1; // Початкове число для пошуку
     let startTime = Date.now(); // Час початку гри
+    const bestTimeKey = `bestTimeTable_${maxNumber}`;
+    const bestScoreKey = `bestScoreTable_${maxNumber}`;
+    const bestTime = localStorage.getItem(bestTimeKey) ? JSON.parse(localStorage.getItem(bestTimeKey)).time : Infinity;
+    const bestScore = localStorage.getItem(bestScoreKey) ? JSON.parse(localStorage.getItem(bestScoreKey)).score : 0;
 
     // Очищаємо блок гри та додаємо елементи
     gameDiv.innerHTML = `
@@ -174,6 +208,8 @@ function loadTableGame(maxNumber) {
             <h2 class="game-title">Таблиця чисел</h2>
             <p><strong>Рейтинг:</strong> <span id="score" class="game-info">${score}</span></p>
             <p><strong>Час:</strong> <span id="time" class="game-info">0</span> секунд</p>
+            ${bestTime !== Infinity ? `<p><strong>Найкращий час:</strong> <span id="best-time" class="game-info">${bestTime}</span> секунд</p>` : ""}
+            ${bestScore > 0 ? `<p><strong>Найкращий рейтинг:</strong> <span id="best-score" class="game-info">${bestScore}</span></p>` : ""}
             <div id="table-container" class="table-container"></div>
             <p class="game-instructions">Знайди числа від 1 до ${maxNumber} у порядку зростання!</p>
             <button id="end-game" class="end-button">Завершити гру</button>
@@ -183,13 +219,15 @@ function loadTableGame(maxNumber) {
     const scoreSpan = document.getElementById("score");
     const timeSpan = document.getElementById("time");
     const tableContainer = document.getElementById("table-container");
+    let updateTime;
+
     document.getElementById("end-game").addEventListener("click", () => {
-        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        endGame("Гру завершено!", score, elapsedTime);
+        clearInterval(updateTime);
+        endTableGame("Гру завершено примусово. Результати не збережено.", score, null, maxNumber);
     });
 
     // Функція для оновлення часу
-    const updateTime = setInterval(() => {
+    updateTime = setInterval(() => {
         const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
         timeSpan.textContent = elapsedTime;
     }, 1000);
@@ -207,6 +245,42 @@ function loadTableGame(maxNumber) {
         });
         tableHTML += "</tr></table>";
         tableContainer.innerHTML = tableHTML;
+    }
+
+    // Функція для завершення гри "Таблиця чисел"
+    function endTableGame(message, score, time = null, maxNumber) {
+        const bestScoreKey = `bestScoreTable_${maxNumber}`;
+        const bestTimeKey = `bestTimeTable_${maxNumber}`;
+        const bestScore = localStorage.getItem(bestScoreKey) ? JSON.parse(localStorage.getItem(bestScoreKey)).score : 0;
+        const bestTime = localStorage.getItem(bestTimeKey) ? JSON.parse(localStorage.getItem(bestTimeKey)).time : Infinity;
+        let comparisonMessage = "";
+
+        if (time !== null) {
+            if (time < bestTime) {
+                localStorage.setItem(bestTimeKey, JSON.stringify({ time: time, timestamp: new Date().toISOString() }));
+                comparisonMessage = `Сьогодні ви швидші на ${bestTime - time} секунд!`;
+            } else {
+                comparisonMessage = `Сьогодні ви повільніші на ${time - bestTime} секунд.`;
+            }
+        }
+
+        if (score > bestScore) {
+            localStorage.setItem(bestScoreKey, JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+        }
+
+        gameDiv.innerHTML = `
+            <h2 class="game-over">${message}</h2>
+            <p class="game-result">Ваш рейтинг: ${score}</p>
+            ${time !== null ? `<p class="game-result">Час: ${time} секунд</p>` : ""}
+            ${bestTime !== Infinity ? `<p class="game-result">Найкращий час: ${bestTime} секунд</p>` : ""}
+            ${bestScore > 0 ? `<p class="game-result">Найкращий рейтинг: ${bestScore}</p>` : ""}
+            ${comparisonMessage ? `<p class="game-comparison">${comparisonMessage}</p>` : ""}
+            <button id="back-to-menu" class="end-button">Назад до меню</button>
+        `;
+
+        document.getElementById("back-to-menu").addEventListener("click", () => {
+            location.reload(); // Перезавантаження сторінки для повернення до меню
+        });
     }
 
     // Обробка кліку на клітинку таблиці
@@ -228,7 +302,7 @@ function loadTableGame(maxNumber) {
         if (currentNumber > maxNumber) {
             clearInterval(updateTime); // Зупиняємо таймер
             const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-            endGame("Вітаємо, ви виграли!", score, elapsedTime);
+            endTableGame("Вітаємо, ви виграли!", score, elapsedTime, maxNumber);
         }
     });
 
@@ -236,17 +310,21 @@ function loadTableGame(maxNumber) {
     generateTable();
 }
 
+
+
+
 // Функція для гри "Нестандартні вирази"
 function loadCustomExpressionsGame() {
     let score = 0;
     let timer = 60;
 
-    // Очищуємо блок гри та додаємо елементи
+    // Очищаємо блок гри та додаємо елементи
     gameDiv.innerHTML = `
         <div class="game-content">
             <h2 class="game-title">Вирази</h2>
             <p><strong>Час:</strong> <span id="time" class="game-info">${timer}</span> секунд</p>
             <p><strong>Рейтинг:</strong> <span id="score" class="game-info">${score}</span></p>
+            <p><strong>Найкращий рейтинг:</strong> <span id="best-score" class="game-info">${localStorage.getItem('bestScoreCustomExpressions') ? JSON.parse(localStorage.getItem('bestScoreCustomExpressions')).score : 0}</span></p>
             <div id="expression" class="example-box"></div>
             <div id="answer-options" class="answer-options"></div>
             <button id="end-game" class="end-button">Завершити гру</button>
@@ -255,10 +333,11 @@ function loadCustomExpressionsGame() {
 
     const timeSpan = document.getElementById("time");
     const scoreSpan = document.getElementById("score");
+    const bestScoreSpan = document.getElementById("best-score");
     const expressionDiv = document.getElementById("expression");
     const answerOptionsDiv = document.getElementById("answer-options");
     document.getElementById("end-game").addEventListener("click", () => {
-        endGame("Гру завершено!", score);
+        endCustomExpressionsGame("Гру завершено!", score);
     });
 
     function generateExpression() {
@@ -299,21 +378,48 @@ function loadCustomExpressionsGame() {
         if (userAnswer === correctAnswer) {
             score++;
             scoreSpan.textContent = score;
+            const bestScore = localStorage.getItem('bestScoreCustomExpressions') ? JSON.parse(localStorage.getItem('bestScoreCustomExpressions')).score : 0;
+            if (score > bestScore) {
+                localStorage.setItem('bestScoreCustomExpressions', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+                bestScoreSpan.textContent = score;
+            }
         }
         generateExpression();
     }
-    
+
+    // Функція для завершення гри "Нестандартні вирази"
+function endCustomExpressionsGame(message, score) {
+    const bestScore = localStorage.getItem('bestScoreCustomExpressions') ? JSON.parse(localStorage.getItem('bestScoreCustomExpressions')).score : 0;
+
+    if (score > bestScore) {
+        localStorage.setItem('bestScoreCustomExpressions', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+    }
+
+    gameDiv.innerHTML = `
+        <h2 class="game-over">${message}</h2>
+        <p class="game-result">Ваш рейтинг: ${score}</p>
+        ${bestScore > 0 ? `<p class="game-result">Найкращий рейтинг: ${bestScore}</p>` : ""}
+        <button id="back-to-menu" class="end-button">Назад до меню</button>
+    `;
+
+    document.getElementById("back-to-menu").addEventListener("click", () => {
+        location.reload(); // Перезавантаження сторінки для повернення до меню
+    });
+}
+
+
     let timerInterval = setInterval(() => {
         timer--;
         timeSpan.textContent = timer;
         if (timer <= 0) {
             clearInterval(timerInterval);
-            endGame("Час вийшов!", score);
+            endCustomExpressionsGame("Час вийшов!", score);
         }
     }, 1000);
-    
+
     generateExpression();
-    }
+}
+
     
     // Додаємо кнопку для запуску гри "Нестандартні вирази" в меню
     const customExpressionsBtn = document.createElement("button");
@@ -394,6 +500,7 @@ function loadCrazyMathGame() {
     let currentNumber = 1;
     let targetNumber = getRandomTarget();
     let interval;
+    const bestScore = localStorage.getItem('bestScoreCrazyMath') ? JSON.parse(localStorage.getItem('bestScoreCrazyMath')).score : 0;
 
     gameDiv.innerHTML = `
         <div class="game-content">
@@ -401,6 +508,7 @@ function loadCrazyMathGame() {
             <p><strong>Рейтинг:</strong> <span id="score" class="game-info">${score}</span></p>
             <p><strong>Ціль:</strong> <span id="target-number" class="game-info">${targetNumber}</span></p>
             <p><strong>Число:</strong> <span id="current-number" class="game-info">${currentNumber}</span></p>
+            <p><strong>Найкращий рейтинг:</strong> <span id="best-score" class="game-info">${bestScore}</span></p>
             <div class="button-container">
                 <button class="math-button" data-operation="multiply">×2</button>
                 <button class="math-button" data-operation="add">+5</button>
@@ -414,9 +522,10 @@ function loadCrazyMathGame() {
     const currentNumberSpan = document.getElementById("current-number");
     const targetNumberSpan = document.getElementById("target-number");
     const scoreSpan = document.getElementById("score");
+    const bestScoreSpan = document.getElementById("best-score");
     document.getElementById("end-game").addEventListener("click", () => {
         clearInterval(interval);
-        endGame("Гру завершено!", score);
+        endCrazyMathGame("Гру завершено!", score);
     });
 
     document.querySelectorAll(".math-button").forEach(button => {
@@ -441,13 +550,18 @@ function loadCrazyMathGame() {
         if (currentNumber === targetNumber) {
             score += 1;
             scoreSpan.textContent = score;
+            const bestScore = localStorage.getItem('bestScoreCrazyMath') ? JSON.parse(localStorage.getItem('bestScoreCrazyMath')).score : 0;
+            if (score > bestScore) {
+                localStorage.setItem('bestScoreCrazyMath', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+                bestScoreSpan.textContent = score;
+            }
             targetNumber = getRandomTarget();
             targetNumberSpan.textContent = targetNumber;
             currentNumber = 1;
             currentNumberSpan.textContent = currentNumber;
         } else if (currentNumber <= 0 || currentNumber > 1000) {
             clearInterval(interval);
-            endGame("Число вийшло за межі!", score);
+            endCrazyMathGame("Число вийшло за межі!", score);
         }
     }
 
@@ -455,12 +569,35 @@ function loadCrazyMathGame() {
         return Math.floor(Math.random() * 100) + 10;
     }
 
+    // Функція для завершення гри "Шалений рахунок"
+function endCrazyMathGame(message, score) {
+    const bestScore = localStorage.getItem('bestScoreCrazyMath') ? JSON.parse(localStorage.getItem('bestScoreCrazyMath')).score : 0;
+
+    if (score > bestScore) {
+        localStorage.setItem('bestScoreCrazyMath', JSON.stringify({ score: score, timestamp: new Date().toISOString() }));
+        bestScore = score; // Оновлюємо bestScore, щоб відобразити його коректно
+    }
+
+    gameDiv.innerHTML = `
+        <h2 class="game-over">${message}</h2>
+        <p class="game-result">Ваш рейтинг: ${score}</p>
+        ${bestScore > 0 ? `<p class="game-result">Найкращий рейтинг: ${bestScore}</p>` : ""}
+        <button id="back-to-menu" class="end-button">Назад до меню</button>
+    `;
+
+    document.getElementById("back-to-menu").addEventListener("click", () => {
+        location.reload(); // Перезавантаження сторінки для повернення до меню
+    });
+}
+
+
     interval = setInterval(() => {
         currentNumber += 1;
         currentNumberSpan.textContent = currentNumber;
         checkWin();
     }, 1000);
 }
+
 
 // Додаємо кнопку для запуску гри "Шалений рахунок" у меню
 const crazyMathBtn = document.createElement("button");
