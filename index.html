@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математична Гра</title>
+    <link rel="stylesheet" href="twoStyle.css">
+</head>
+<body>
+
+    <audio id="background-music" loop>
+        <source src="фон.mp3" type="audio/mp3">
+        Ваш браузер не підтримує елемент audio.
+    </audio>
+    
+    <button id="mute-button">🔊</button>
+    
+    <script src="music.js"></script>
+    
+
+    <div class="table-container">
+        <!-- Ваша таблиця тут -->
+    </div>
+
+    <div class="container">
+        <div class="welcome-message">
+            <h1>Вітаємо у нашій ігровій платформі!</h1>
+            <p>Тут ви знайдете цікаві та розвиваючі ігри:</p>
+            <ul>
+                <li><strong>Рішення прикладів</strong> – потренуйте свій мозок у швидкому рахунку.</li>
+                <li><strong>Таблиця чисел</strong> – знайдіть числа та перевірте свою уважність.</li>
+                <li><strong>2048</strong> – об'єднуйте плитки та досягайте нових рекордів!</li>
+                <li><strong>Нестандартні приклади</strong> – розв'язуйте загадкові рівняння та покращуйте свої навички!</li>
+                <li><strong>Шалений рахунок</strong> – тренуйте швидкість підрахунку та змагайтеся з часом!</li>
+            </ul>
+            <p>Обирайте гру та насолоджуйтесь!</p>
+            <a href="main1.html" class="start-button">Почати</a>
+        </div>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', function () {
+        var audio = document.getElementById('background-music');
+        var button = document.getElementById('mute-button');
+    
+        if (!audio || !button) return; // Перевірка, чи існують елементи
+    
+        // Завантажуємо стан mute з localStorage
+        var isMuted = localStorage.getItem('isMuted') === 'true';
+        audio.muted = isMuted;
+    
+        // Встановлюємо правильний смайлик на кнопці відповідно до стану звуку
+        button.textContent = audio.muted ? '🔇' : '🔊';
+    
+        // Додаємо плавне збільшення гучності
+        function fadeInMusic() {
+            let volume = 0;
+            audio.volume = volume;
+            audio.play().then(() => {
+                let interval = setInterval(() => {
+                    volume += 0.05;
+                    if (volume >= 1) {
+                        clearInterval(interval); // Зупиняємо інтервал, коли досягнута максимальна гучність
+                    }
+                    audio.volume = volume;
+                }, 100); // Кожні 100 мс збільшуємо гучність на 0.05
+            }).catch(() => console.log("Щось пішло не так з відтворенням."));
+        }
+    
+        // Функція для запуски музики після взаємодії з користувачем
+        function playOnUserInteraction() {
+            fadeInMusic();
+            document.removeEventListener('click', playOnUserInteraction);
+            document.removeEventListener('keydown', playOnUserInteraction);
+        }
+    
+        // Якщо музика не грає, намагаємось запустити з fade-in ефектом
+        if (audio.paused && !audio.muted) {
+            fadeInMusic();
+        }
+    
+        // Додаємо обробник події на кнопку для перемикання гучності
+        button.addEventListener('click', function () {
+            audio.muted = !audio.muted;
+            localStorage.setItem('isMuted', audio.muted);
+            button.textContent = audio.muted ? '🔇' : '🔊'; // Зміна смайлика на кнопці
+        });
+    
+        // Спроба запустити музику одразу
+        var playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                console.log("Автовідтворення заблоковано. Чекаємо на взаємодію...");
+                // Якщо браузер блокує — чекаємо на клік або клавішу
+                document.addEventListener('click', playOnUserInteraction, { once: true });
+                document.addEventListener('keydown', playOnUserInteraction, { once: true });
+            });
+        }
+    });
+    </script>
+
+</body>
+</html>
