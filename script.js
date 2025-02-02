@@ -634,11 +634,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }).catch(() => console.log("Щось пішло не так з відтворенням."));
     }
 
-    // Функція для запуски музики після взаємодії з користувачем
+    // Функція для запуску музики після взаємодії з користувачем
     function playOnUserInteraction() {
         fadeInMusic();
+        removeInteractionListeners(); // Видаляємо обробники після першого спрацьовування
+    }
+
+    // Видалення обробників після першого взаємодії
+    function removeInteractionListeners() {
         document.removeEventListener('click', playOnUserInteraction);
         document.removeEventListener('keydown', playOnUserInteraction);
+        document.removeEventListener('scroll', playOnUserInteraction);
+        document.removeEventListener('touchstart', playOnUserInteraction);
+        document.removeEventListener('mousemove', playOnUserInteraction);
     }
 
     // Якщо музика не грає, намагаємось запустити з fade-in ефектом
@@ -658,9 +666,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (playPromise !== undefined) {
         playPromise.catch(() => {
             console.log("Автовідтворення заблоковано. Чекаємо на взаємодію...");
-            // Якщо браузер блокує — чекаємо на клік або клавішу
+            // Якщо браузер блокує — чекаємо на будь-яку взаємодію
             document.addEventListener('click', playOnUserInteraction, { once: true });
             document.addEventListener('keydown', playOnUserInteraction, { once: true });
+            document.addEventListener('scroll', playOnUserInteraction, { once: true });
+            document.addEventListener('touchstart', playOnUserInteraction, { once: true });
+            document.addEventListener('mousemove', playOnUserInteraction, { once: true });
         });
     }
 });
