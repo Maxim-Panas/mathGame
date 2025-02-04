@@ -25,7 +25,7 @@
                 <li><strong>Рішення прикладів</strong> – потренуйте свій мозок у швидкому рахунку.</li>
                 <li><strong>Таблиця чисел</strong> – знайдіть числа та перевірте свою уважність.</li>
                 <li><strong>2048</strong> – об'єднуйте плитки та досягайте нових рекордів!</li>
-                <li><strong>Вирази</strong> – розв'язуйте загадкові рівняння та покращуйте свої навички!</li>
+                <li><strong>Нестандартні приклади</strong> – розв'язуйте загадкові рівняння та покращуйте свої навички!</li>
                 <li><strong>Шалений рахунок</strong> – тренуйте швидкість підрахунку та змагайтеся з часом!</li>
             </ul>
             <p>Обирайте гру та насолоджуйтесь!</p>
@@ -34,13 +34,12 @@
     </div>
 
 
-<script>
-    document.getElementById('start-button').addEventListener('click', function () {
-    localStorage.setItem('startMusic', 'true'); // Позначаємо, що музика має стартувати
-    window.location.href = "main1.html"; // Переходимо на сторінку гри
+<script src="music.js">
+</script>
+<script> document.getElementById("start-button").addEventListener("click", function() {
+    window.location.href = "main1.html";
 });
 </script>
-
 
 </body>
 </html>
