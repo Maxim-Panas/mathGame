@@ -89,10 +89,10 @@ body{
   }
   /* Підняти кнопки на маленьких екранах */
   .top-button {
-    top: 7vh;
+    top: 5vh;
   }
   #newGame {
-    top: 14vh; /* Зменшена відстань між кнопками */
+    top: 12vh; /* Зменшена відстань між кнопками */
   }
 }
 
@@ -230,7 +230,7 @@ body{
   height: 90vmin;
   max-width: 440px;
   max-height: 440px;
-  top: 55%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 0.5vmin solid #4facfe;
