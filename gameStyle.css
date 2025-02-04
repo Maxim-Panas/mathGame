@@ -230,7 +230,7 @@ body{
   height: 90vmin;
   max-width: 440px;
   max-height: 440px;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 0.5vmin solid #4facfe;
