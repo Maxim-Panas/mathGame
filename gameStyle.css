@@ -230,7 +230,7 @@ body{
   height: 90vmin;
   max-width: 440px;
   max-height: 440px;
-  top: 65%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 0.5vmin solid #4facfe;
@@ -241,6 +241,13 @@ body{
   padding: 2vmin; /* Додаємо відступи всередині */
 }
 
+/* Адаптивність для екранів шириною 600px */
+@media (max-width: 600px) {
+  #stage {
+     top:55%;
+    left:50%;
+  }
+}
 /* Плитки */
 span {
   display: flex;
