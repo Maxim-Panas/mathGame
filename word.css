@@ -87,20 +87,63 @@ h1 {
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
     color: #4facfe;
     background-color: #333;
     border: 2px solid #4facfe;
-    border-radius: 5px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    margin: 3px; /* Зменшуємо загальні відступи */
-    margin-top: 120px; /* Значно зменшуємо верхній відступ */
-    padding: 5px; /* Зменшуємо внутрішній відступ */
+    font-size: 28px;
+    margin: 4px;
+    padding: 8px;
+    touch-action: none;
+    position: relative; /* Додаємо позиціонування для клітинок */
+    top: 140px; /* Встановлюємо відступ зверху для великих екранів */
 }
+
+/* Адаптація для телефонів */
+@media (max-width: 480px) {
+    .cell {
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        margin: 3px;
+        padding: 6px;
+        top: 150px; /* Зменшуємо відступ для середніх екранів */
+    }
+}
+
+/* Адаптація для дуже маленьких екранів (наприклад, iPhone SE) */
+@media (max-width: 360px) {
+    .cell {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+        margin: 2px;
+        padding: 5px;
+        top: 150px; /* Ще більше зменшуємо відступ для маленьких екранів */
+    }
+}
+
+/* Адаптація для дуже малих екранів */
+@media (max-width: 320px) {
+    .cell {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        margin: 2px;
+        padding: 4px;
+        top: 5px; /* Мінімальний відступ для дуже маленьких екранів */
+    }
+}
+
+
+
+
+
 
 
 #letters-container {
@@ -251,12 +294,6 @@ border-radius: 15px;
     }
     
     h1 {
-        font-size: 20px;
-    }
-    
-    .cell {
-        width: 8px;
-        height: 8px;
         font-size: 20px;
     }
     
