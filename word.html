@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гра: Відгадай слово</title>
+    <link rel="stylesheet" href="word.css">
+</head>
+<body>
+    <div id="popup" class="popup hidden"></div>
+    <div class="h1-container">
+        <h1>Відгадай слово</h1>
+    </div>
+    
+    <audio id="background-music" loop>
+        <source src="фон.mp3" type="audio/mp3">
+        Ваш браузер не підтримує елемент audio.
+    </audio>
+
+    <button id="mute-button">🔊</button>
+
+    <div id="word-container"></div>
+    <div id="letters-container"></div>
+    <p id="message"></p>
+    <p id="fact" class="hidden"></p>
+    <button id="view-facts-btn">Переглянути всі факти</button>
+    <p id="score">Відгадані слова: 0</p>
+    <div id="all-facts" class="hidden"></div>
+    <script src="music.js"></script>
+    <script src="word.js"></script>
+    
+</body>
+</html>
