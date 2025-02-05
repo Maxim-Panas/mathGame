@@ -107,12 +107,12 @@ h1 {
 /* Адаптація для телефонів */
 @media (max-width: 480px) {
     .cell {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
         font-size: 20px;
         margin: 3px;
         padding: 6px;
-        top: 150px; /* Зменшуємо відступ для середніх екранів */
+        top: 170px; /* Зменшуємо відступ для середніх екранів */
     }
 }
 
