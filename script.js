@@ -719,7 +719,7 @@ const otherGamesBtn = document.createElement("button");
 otherGamesBtn.textContent = "Інші Ігри";
 otherGamesBtn.className = "menu-button";
 otherGamesBtn.addEventListener("click", function () {
-    window.location.href = "game.html"; // Перехід на game.html
+    window.location.href = "word.html"; // Перехід на game.html
 });
 document.getElementById("menu").appendChild(otherGamesBtn);
 
