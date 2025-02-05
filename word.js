@@ -71,7 +71,9 @@ function generateNewWord() {
     }
     currentWordData = unusedWords[Math.floor(Math.random() * unusedWords.length)];
     currentWord = currentWordData.word;
-    shuffledLetters = shuffleArray(currentWord.split(""));
+
+    // Видаляємо першу літеру зі списку літер для перемішування
+    shuffledLetters = shuffleArray(currentWord.slice(1).split(""));
 
     usedWords.push(currentWord);
     renderWordCells();
@@ -81,12 +83,20 @@ function generateNewWord() {
 function renderWordCells() {
     const wordContainer = document.getElementById("word-container");
     wordContainer.innerHTML = "";
-    currentWord.split("").forEach((_, index) => {
+    currentWord.split("").forEach((letter, index) => {
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.setAttribute("data-index", index);
-        cell.addEventListener("dragover", allowDrop);
-        cell.addEventListener("drop", drop);
+
+        // Додаємо першу літеру до клітинки
+        if (index === 0) {
+            cell.textContent = letter;
+            cell.style.backgroundColor = "#444"; // Встановлюємо колір фону для першої літери
+        } else {
+            cell.addEventListener("dragover", allowDrop);
+            cell.addEventListener("drop", drop);
+        }
+
         wordContainer.appendChild(cell);
     });
 }
@@ -196,12 +206,123 @@ function handleTouchEnd(e) {
     draggedLetter = null;
 }
 
-// Функція для повернення літери, якщо вона не встала
+// Function to return the letter to its original position if placed incorrectly
 function returnToOriginalPosition() {
     draggedLetter.style.left = `${originalX}px`;
     draggedLetter.style.top = `${originalY}px`;
     draggedLetter.style.position = '';
     draggedLetter.style.zIndex = '';
+}
+
+// Adding event listeners to the letters after they are created
+function addTouchEvents() {
+    document.querySelectorAll(".letter").forEach(letter => {
+        letter.addEventListener("touchstart", handleTouchStart);
+        letter.addEventListener("touchmove", handleTouchMove);
+        letter.addEventListener("touchend", handleTouchEnd);
+    });
+}
+
+// Call after creating new letters
+renderLetterCells();
+addTouchEvents();
+
+
+// Функція для повернення літери, якщо вона не встала
+function resetDraggedLetter() {
+    draggedLetter.style.position = '';
+    draggedLetter.style.left = '';
+    draggedLetter.style.top = '';
+    draggedLetter.style.zIndex = '';
+    draggedLetter.style.backgroundColor = "red";
+    setTimeout(() => {
+        draggedLetter.style.backgroundColor = "blue";
+    }, 500);
+}
+
+// Додаємо обробники подій до літер
+document.querySelectorAll(".letter").forEach(letter => {
+    letter.addEventListener("touchstart", handleTouchStart);
+    letter.addEventListener("touchmove", handleTouchMove);
+    letter.addEventListener("touchend", handleTouchEnd);
+});
+
+
+
+function checkWordCompletion() {
+    let correctCount = 0;
+    document.querySelectorAll(".cell").forEach((cell, index) => {
+        if (cell.textContent === currentWord[index]) {
+            cell.style.backgroundColor = "#444";
+            cell.draggable = false;
+            correctCount++;
+        }
+    });
+
+    if (correctCount === currentWord.length) {
+        setTimeout(displayPopup, 500);
+    }
+}
+
+function displayPopup() {
+    score++;
+    localStorage.setItem("score", score);
+    document.getElementById("score").textContent = "Відгадані слова: " + score;
+    saveFact();
+
+    const popup = document.getElementById("popup");
+    popup.classList.remove("hidden");
+    popup.style.display = "block";
+
+    popup.innerHTML = `
+        <div class="popup-content">
+            <h2>Правильно!</h2>
+            <p>${currentWordData.fact}</p>
+            <button id="continue-btn">Продовжити</button>
+        </div>
+    `;
+    document.getElementById("continue-btn").addEventListener("click", continueGame);
+}
+
+function saveFact() {
+    if (!allFacts.includes(currentWordData.fact)) {
+        allFacts.push(currentWordData.fact);
+        localStorage.setItem("allFacts", JSON.stringify(allFacts));
+    }
+    document.getElementById("view-facts-btn").style.display = "block";
+}
+
+function viewFacts() {
+    const allFactsContainer = document.getElementById("all-facts");
+    
+    // Додаємо всі факти
+    allFactsContainer.innerHTML = allFacts.join("<br><br>");
+
+    // Додаємо кнопку "Закрити"
+    if (!document.getElementById("close-facts-btn")) {
+        let closeButton = document.createElement("button");
+        closeButton.id = "close-facts-btn";
+        closeButton.textContent = "Закрити";
+        closeButton.style.display = "block";
+        closeButton.style.marginTop = "10px";
+        closeButton.addEventListener("click", () => {
+            allFactsContainer.classList.add("hidden");
+        });
+        allFactsContainer.appendChild(closeButton);
+    }
+
+    allFactsContainer.classList.toggle("hidden");
+}
+
+function continueGame() {
+    const popup = document.getElementById("popup");
+    popup.classList.add("hidden");
+    popup.style.display = "none";
+    generateNewWord();
+}
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
 }
 
 // Додаємо обробники подій до літер після їх створення
