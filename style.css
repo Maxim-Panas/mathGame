@@ -1,0 +1,352 @@
+/* Загальні стилі для сторінки */
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #333;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden; /* Фікс горизонтального скролу */
+    width: 100%;
+}
+
+/* Виправлення виходу за межі екрану */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.answer-button {
+    width: 50px; /* Зменшена ширина */
+    height: 40px; /* Зменшена висота */
+    font-size: 16px; /* Менший шрифт */
+    margin: 5px; /* Зменшений відступ */
+    padding: 5px;
+    border: none;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: #333;
+    font-weight: bold;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+    display: inline-block; /* Встановлюємо кнопки в рядок */
+}
+
+.answer-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.answer-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Контейнер для кнопок, щоб вони залишались в рядок */
+#answer-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Якщо місця не вистачає, кнопки переносяться */
+}
+
+
+/* Анімація наведення */
+.ah:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+
+
+h1 {
+    background-color: #333;
+    color: #00f2fe;
+    padding: 20px;
+    margin: 0;
+    font-size: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    text-shadow: none;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    z-index: 1000;
+}
+
+button {
+     width: 170px;
+    height: 60px;
+    font-size: 15px;
+    margin: 10px auto;
+    padding: 0;
+    border: none;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: #333;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    
+   
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#game {
+    position: fixed; /* Для фіксованого позиціонування по центру */
+    top: 55%; /* Трохи опускаємо вниз */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Центруємо по обох осях */
+    margin-top: 0;
+    padding: 30px;
+    background: #464646;
+    border: 1px solid #4facfe;
+    border-radius: 20px;
+    width: 80%; /* Ширина 80% екрану */
+    max-width: 800px; /* Максимальна ширина */
+    height: 80vh; /* Висота 80% від висоти екрана */
+    max-height: 700px; /* Максимальна висота */
+    box-shadow: 0 10px 15px #2599ffc4;
+    
+    animation: fadeIn 1s ease-in-out forwards;
+    display: none; /* Спочатку приховуємо */
+    overflow-y: auto; /* Вертикальний скрол */
+    overflow-x: hidden; /* Відключаємо горизонтальний скрол */
+}
+
+#menu {
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    row-gap: 10px;
+    justify-content: center;
+    width: 80%;
+    max-width: 500px;
+}
+
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1); /* Початковий стан */
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8); /* Кінцевий стан (зменшення та зникнення) */
+    }
+}
+
+
+
+
+
+
+.game-btn {
+    position: absolute;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-btn:hover {
+    transform: translateY(-3px);
+}
+
+
+
+/* Вміст гри */
+.game-content {
+    text-align: center;
+}
+
+.game-title {
+    font-size: 28px;
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.game-info {
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#mute-button {
+    position: fixed;
+    top: -5px;
+    right: 10px;
+    z-index: 9999;
+    width: 100px; /* Встановлюємо ширину кнопки */
+    height: 40px; /* Встановлюємо висоту кнопки */
+    padding: 5px; /* Встановлюємо внутрішні відступи */
+    font-size: 14px; /* Розмір шрифту */
+    /* Інші стилі за потреби */
+}
+
+
+.game-button {
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.game-over {
+    color: #ff4d4d;
+    font-size: 26px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.game-result {
+    font-size: 20px;
+    color: #ffffff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Стилі для таблиці */
+.table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+
+.number-table {
+    width: auto;
+    min-width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.number-table td {
+    padding: 15px;
+    min-width: 60px;
+    border: 1px solid #ffffff33;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+    .number-table {
+        width: auto; /* Дозволяє таблиці адаптуватися */
+        min-width: 100%; /* Займає всю доступну ширину */
+    }
+
+    .number-table td {
+        padding: 8px;
+        font-size: 16px;
+        min-height: 40px; /* Фіксована мінімальна висота */
+        white-space: nowrap; /* Забороняє перенос тексту */
+    }
+}
+
+.number-table td:hover {
+    background-color: #f1f1f1;
+}
+
+.number-table td.cell {
+    background-color: #2b587622;
+}
+
+.number-table td.green {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.number-table td.red {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.new-class {
+    display: flex;
+    justify-content: center; /* Вирівнювання по горизонталі */
+    align-items: center; /* Вирівнювання по вертикалі */
+    width: 600px; /* Задана ширина кнопки */
+    margin: 20px -85px; /* Відступи зверху та по центру */
+    padding: 10px; /* Додаткові внутрішні відступи */
+}
+
+@media (max-width: 1200px) {
+    .new-class {
+        max-width: 500px; /* Зменшення максимальної ширини для екранів до 1200px */
+        margin: 20px auto; /* Відступи зверху та по центру */
+        padding: 10px; /* Додаткові внутрішні відступи */
+    }
+}
+
+@media (max-width: 992px) {
+    .new-class {
+        max-width: 400px; /* Зменшення максимальної ширини для екранів до 992px */
+        margin: 20px auto; /* Відступи зверху та по центру */
+        padding: 10px; /* Додаткові внутрішні відступи */
+    }
+}
+
+@media (max-width: 768px) {
+    .new-class {
+        max-width: 300px; /* Зменшення максимальної ширини для екранів до 768px */
+        margin: 20px 50px; /* Відступи зверху та по центру */
+        padding: 10px; /* Додаткові внутрішні відступи */
+    }
+}
+
+@media (max-width: 576px) {
+    .new-class {
+        max-width: 200px; /* Зменшення максимальної ширини для екранів до 576px */
+        margin: 20px 90px; /* Відступи зверху та по центру */
+        padding: 10px; /* Додаткові внутрішні відступи */
+    }
+}
