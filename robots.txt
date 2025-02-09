@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maxim-panas.github.io/mathGame/sitemap.xml
